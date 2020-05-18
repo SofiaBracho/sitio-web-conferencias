@@ -9,7 +9,7 @@ require 'includes/paypal.php';
 <section class="seccion contenedor">
     <h2>Pagos con Paypal</h2>
         <?php
-            if(isset($_GET['exito']) && isset($_GET['id_pago'])) {
+            if(isset($_GET['id_pago'])) {
 
                 $paymentId = $_GET['paymentId'];
                 $id_pago = (int) $_GET['id_pago'];
