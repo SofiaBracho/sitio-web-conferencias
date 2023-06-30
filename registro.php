@@ -81,71 +81,68 @@
       </div> <!-- Paquetes -->
 
       <div id="eventos" class="eventos clearfix">
+        <?php
+          include_once 'includes/funciones/bd_conexion.php';
+        
+          try {
+            $sql = " SELECT eventos.*, categoria_evento.cat_evento, invitados.nombre_invitado, invitados.apellido_invitado ";
+            $sql .= " FROM eventos ";
+            $sql .= " JOIN categoria_evento ";
+            $sql .= " ON eventos.id_cat_evento = categoria_evento.id_categoria ";
+            $sql .= " JOIN invitados ";
+            $sql .= " ON eventos.id_inv = invitados.invitado_id ";
+            $sql .= " ORDER BY eventos.fecha_evento, categoria_Evento.cat_evento, eventos.hora_evento ";
+
+            $resultado = $conn->query($sql);
+          } catch (Exception $e) {
+            echo 'Error: ' . $e->getMessage();
+          }
+
+          while($eventos = $resultado->fetch_assoc() ) {
+            //Establecer la fecha como un día de la semana
+            $fecha = $eventos['fecha_evento'];
+            setlocale(LC_TIME, 'spanish');
+            $dia_semana = utf8_encode(strftime("%A", strtotime($fecha)));
+            //Seleccionar la categoría
+            $categoria = $eventos['cat_evento'];
+
+            //Crear un nuevo arreglo personalizado
+            $dia = array(
+              'nombre_evento' => $eventos['nombre_evento'],
+              'hora' => $eventos['hora_evento'],
+              'id' => $eventos['evento_id'],
+              'nombre_invitado' => $eventos['nombre_invitado'],
+              'apellido_invitado' => $eventos['apellido_invitado']
+            );
+            //Formatear el arreglo para ordenarlo por las llaves
+            $eventos_dias[$dia_semana]['eventos'][$categoria][] = $dia;
+          }
+          // echo '<pre>';
+          //    var_dump($eventos_dias);
+          //  echo '</pre>';
+        ?>
+
         <h3>Elige tus talleres</h3>
         <div class="caja">
-          <div id="viernes" class="contenido-dia clearfix">
-            <h4>Viernes</h4>
+          <?php foreach($eventos_dias as $dia => $eventos) { ?>
+          <h4><?php echo $dia; ?></h4>
+          <div id="<?php echo str_replace('á', 'a', $dia); ?>" class="contenido-dia clearfix">
+              <?php foreach($eventos['eventos'] as $categoria => $evento): ?>
               <div>
-                <p>Talleres:</p>
-                <label><input type="checkbox" name="registro[]" id="taller_01" value="taller_01"><time>10:00</time>Responsive Web Design</label>
-                <label><input type="checkbox" name="registro[]" id="taller_02" value="taller_02"><time>12:00</time>Flexbox</label>
-                <label><input type="checkbox" name="registro[]" id="taller_03" value="taller_03"><time>14:00</time>HTML5 y CSS3</label>
-                <label><input type="checkbox" name="registro[]" id="taller_04" value="taller_04"><time>17:00</time>Drupal</label>
-                <label><input type="checkbox" name="registro[]" id="taller_05" value="taller_05"><time>19:00</time>WordPress</label>
+                <p><?php echo $categoria; ?></p>
+                  <?php foreach($evento as $evento_dia) {?>
+                <label>
+                  <input type="checkbox" name="registro[]" id="<?php echo $evento_dia['id']; ?>" value="<?php echo $evento_dia['id']; ?>">
+                  <time><?php echo $evento_dia['hora']; ?></time>
+                  <?php echo $evento_dia['nombre_evento']; ?>
+                  <br>
+                  <span class="autor"><?php echo $evento_dia['nombre_invitado'] . ' ' . $evento_dia['apellido_invitado']; ?></span>
+                </label>
+                  <?php } //foreach ?>
               </div>
-              <div>
-                <p>Conferencias</p>
-                  <label><input type="checkbox" name="registro[]" id="conferencia_01" value="conferencia_01"><time>10:00</time>Como ser Freelancer</label>
-                  <label><input type="checkbox" name="registro[]" id="conferencia_02" value="conferencia_02"><time>17:00</time>Tecnologías del Futuro</label>
-                  <label><input type="checkbox" name="registro[]" id="conferencia_03" value="conferencia_03"><time>19:00</time>Seguridad en la Web</label>
-              </div>
-              <div>
-                <p>Seminarios</p>
-                <label><input type="checkbox" name="registro[]" id="seminario_01" value="seminario_01"><time>10:00</time>Diseño UI y UX para la Web</label>
-              </div>
-          </div> <!-- #viernes -->
-    
-          <div id="sabado" class="contenido-dia clearfix">
-            <h4>Sábado</h4>
-              <div>
-                <p>Talleres</p>
-                <label><input type="checkbox" name="registro[]" id="taller_06" value="taller_06"><time>10:00</time>Angular js</label>
-                <label><input type="checkbox" name="registro[]" id="taller_07" value="taller_07"><time>10:00</time>PHP y MySQL</label>
-                <label><input type="checkbox" name="registro[]" id="taller_08" value="taller_08"><time>10:00</time>JavaScript Avanzado</label>
-                <label><input type="checkbox" name="registro[]" id="taller_09" value="taller_09"><time>10:00</time>SEO en Google</label>
-                <label><input type="checkbox" name="registro[]" id="taller_10" value="taller_10"><time>10:00</time>De photoshopt a HTML5 y CSS3</label>
-                <label><input type="checkbox" name="registro[]" id="taller_11" value="taller_11"><time>10:00</time>PHP Medio y Avanzado</label>
-              </div>
-              <div>
-                <p>Conferencias</p>
-                <label><input type="checkbox" name="registro[]" id="conferencia_04" value="conferencia_04"><time>10:00</time>Crear tienda Online</label>
-                <label><input type="checkbox" name="registro[]" id="conferencia_05" value="conferencia_05"><time>10:00</time>Crear negocio rentable</label>
-              </div>
-              <div>
-                <p>Seminarios</p>
-                <label><input type="checkbox" name="registro[]" id="seminario_02" value="seminario_02"><time>10:00</time>Diseño UI y UX para móviles</label>
-              </div>
-          </div> <!-- #sábado -->
-    
-          <div id="domingo" class="contenido-dia clearfix">
-            <h4>Domingo</h4>
-              <div>
-                <p>Talleres</p>
-                <label><input type="checkbox" name="registro[]" id="taller_12" value="taller_12"><time>10:00</time>Angular JS</label>
-                <label><input type="checkbox" name="registro[]" id="taller_13" value="taller_13"><time>10:00</time>Preprocesadores</label>
-                <label><input type="checkbox" name="registro[]" id="taller_14" value="taller_14"><time>10:00</time>Vue JS</label>
-              </div>
-              <div>
-                <p>Conferencias</p>
-                <label><input type="checkbox" name="registro[]" id="conferencia_06" value="conferencia_06"><time>10:00</time>SASS</label>
-                <label><input type="checkbox" name="registro[]" id="conferencia_07" value="conferencia_07"><time>10:00</time>Bootstrap</label>
-              </div>
-              <div>
-                <p>Seminarios</p>
-                <label><input type="checkbox" name="registro[]" id="seminario_03" value="seminario_03"><time>10:00</time>Como emprender en tecnología</label>
-              </div>
-          </div> <!-- #domingo -->
-    
+              <?php endforeach; ?>
+          </div> <!-- #contenido-dia -->
+          <?php } //foreach ?>
         </div> <!-- .caja -->
       </div> <!-- #eventos -->
     

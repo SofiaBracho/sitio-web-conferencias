@@ -17,3 +17,6 @@ robots.txt
 site.webmanifest
 tile.png
 tile-wide.png
+webfonts/
+.vscode/
+admin/webfonts

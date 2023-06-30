@@ -31,7 +31,7 @@
     }
   ?>
 
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald|PT+Sans&display=swap" rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans|Oswald|PT+Sans&display=swap" rel="stylesheet"> -->
   
   <link rel="stylesheet" href="css/main.css">
 

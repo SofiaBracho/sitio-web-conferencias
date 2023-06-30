@@ -1,0 +1,82 @@
+div.pull-left {
+  float: left;
+}
+div.pull-right {
+  float: right;
+}
+.login-page .main-footer {
+  display: none;
+}
+.has-success {
+  color: #45da45;
+}
+.has-success input {
+  border-color: #45da45;
+}
+.has-error {
+  color: #f64a4a;
+}
+.has-error input {
+  border-color: #f64a4a;
+}
+.form-group.has-success > #resultado-password {
+  margin: 0 auto;
+  color: white;
+  background-color: #45da45;
+  padding: .2rem 1.5rem;
+  border-radius: 20px;
+}
+.form-group.has-error > #resultado-password {
+  margin: 0 auto;
+  color: white;
+  background-color: #f64a4a;
+  padding: .2rem 1.5rem;
+  border-radius: 20px;
+}
+td {
+  max-width: 100px;
+}
+tr a {
+  margin-bottom: 10px;
+}
+.badge {
+  display: block;
+}
+/* Formulario para crear registro de usuario */
+.nombre-dia {
+  text-align: center;
+}
+ul.lista-precios {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+ul.lista-precios li .numero {
+  font-size: 30px;
+}
+ul.lista-precios ul {
+  list-style: none;
+}
+.tabla-precio h3 {
+  text-transform: uppercase;
+  color: #fe4918;
+  font-weight: bold;
+  font-size: 20px;
+}
+.contenido-dia {
+  display: none;
+}
+.contenido-dia label {
+  font-weight: 450!important;
+  display: block;
+}
+.contenido-dia time {
+  color: #fe4918;
+  font-weight: bold;
+}
+.nombre-dia {
+  text-transform: uppercase;
+  font-size: 18px;
+  color: #fe4918;
+  font-weight: bold;
+}
